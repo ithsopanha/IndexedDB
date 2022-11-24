@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./indexedDB.js"></script>
+</head>
+<body>
+    <script>
+        //create database
+        openDB("test",1).then((db)=>{
+            db=db;
+            console.log(db);
+            //insert data
+            let data={
+                uuid: create_UUID(),
+                name: "panha168",
+                age:25
+            }
+            //addData(db,'DatabaseNameTest',data);
+
+            getDataByKey(db,'DatabaseNameTest','ca834440-f8c7-4e11-a0f9-a09be036aadc');
+        });
+        
+    </script>
+</body>
+</html>
