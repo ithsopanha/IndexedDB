@@ -85,3 +85,20 @@
         };
       
  }
+ //read the whole data as a array
+ function cursorGetData(db,storeName){
+  let list=[]; //first define array
+  let store= db.transaction(storeName,"readwrite") //medthod 
+               .objectStore(storeName); //from database object
+  let request=store.openCursor(); //open cursor (cursor it's like pointer)
+  request.onsuccess=function(e){
+    var cursor=e.target.result;
+    if(cursor){
+      list.push(cursor.value);
+      cursor.continue(); //continue reading the data using cursor
+    }
+    else{
+      console.log("cursor read data",list);
+    }
+  }
+ }
