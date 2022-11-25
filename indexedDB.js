@@ -88,8 +88,7 @@
  //read the whole data as a array
  function cursorGetData(db,storeName){
   let list=[]; //first define array
-  let store= db.transaction(storeName,"readwrite") //medthod 
-               .objectStore(storeName); //from database object
+  let store= db.transaction(storeName,"readwrite").objectStore(storeName); //from database object//medthod 
   let request=store.openCursor(); //open cursor (cursor it's like pointer)
   request.onsuccess=function(e){
     var cursor=e.target.result;
@@ -102,3 +101,33 @@
     }
   }
  }
+
+ 
+ function getDataByIndex(db, storeName, indexName, indexValue){
+  var store=db.transaction(storeName, "readwrite").objectStore(storeName);
+  var request=store.index(indexName).get(indexValue);
+  request.onerror=function () {
+    console.log("transcation failed");
+  }
+  request.onsuccess=function (e) {
+    var result=e.target.result;
+    console.log("Index search result",result);
+  }; 
+ }
+
+ function cursorGetDataByIndex(db, storeName,indexName,indexValue){
+  let list=[];
+  var store= db.transaction(storeName,"readwrite").objectStore(storeName);
+  var request= store.index(indexName).openCursor(IDBKeyRange.only(indexValue));
+  request.onsuccess=function(e){
+    var cursor=e.target.result;
+    if(cursor){
+      list.push(cursor.value);
+      cursor.continue();
+    }else{
+      console.log("result",list);
+    };
+    request.onerror=function(e){};
+  }
+ }
+
